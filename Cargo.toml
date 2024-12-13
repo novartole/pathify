@@ -5,6 +5,7 @@ authors = ["Artem Novikov <novartole@gmial.com>"]
 description = "Build nested structures that remember their ancestors"
 edition = "2021"
 keywords = ["macros"]
+license = "MIT"
 repository = "https://github.com/novartole/pathify"
 
 [dependencies]
