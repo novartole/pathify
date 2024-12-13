@@ -1,0 +1,13 @@
+[package]
+name = "pathify"
+version = "0.1.0"
+authors = ["Artem Novikov <novartole@gmial.com>"]
+description = "Build nested structures that remember their ancestors"
+edition = "2021"
+keywords = ["macros"]
+repository = "https://github.com/novartole/pathify"
+
+[dependencies]
+convert_case = "0.6.0"
+paste = "1.0.15"
+smart-default = "0.7.1"
