@@ -90,3 +90,79 @@ macro_rules! pathify {
         concat!($a, ".", stringify!($b))
     };
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn single_root() {
+        pathify! { SingleRoot }
+
+        let root = SingleRoot::default();
+        assert_eq!(root.to_string(), "single_root");
+    }
+
+    #[test]
+    fn different_levels() {
+        pathify! {
+            Root {
+                Node1
+                Node2 {
+                    Node21
+                    Node22
+                }
+                Node3 {
+                    Node31 {
+                        Node311
+                    }
+                    Node32
+                }
+                Node4 {
+                    Node41
+                    Node42 {
+                        Node421
+                    }
+                }
+                Node5 {
+                    Node51 {
+                        Node511
+                    }
+                    Node52 {
+                        Node521
+                    }
+                }
+            }
+        }
+
+        let root = Root::default();
+        assert_eq!(root.to_string(), "root");
+        assert_eq!(root.node1.to_string(), "root.node_1");
+        assert_eq!(root.node2.to_string(), "root.node_2");
+        assert_eq!(root.node2.node21.to_string(), "root.node_2.node_21");
+        assert_eq!(root.node2.node22.to_string(), "root.node_2.node_22");
+        assert_eq!(root.node3.to_string(), "root.node_3");
+        assert_eq!(root.node3.node31.to_string(), "root.node_3.node_31");
+        assert_eq!(
+            root.node3.node31.node311.to_string(),
+            "root.node_3.node_31.node_311"
+        );
+        assert_eq!(root.node3.node32.to_string(), "root.node_3.node_32");
+        assert_eq!(root.node4.to_string(), "root.node_4");
+        assert_eq!(root.node4.node41.to_string(), "root.node_4.node_41");
+        assert_eq!(
+            root.node4.node42.node421.to_string(),
+            "root.node_4.node_42.node_421"
+        );
+        assert_eq!(root.node5.to_string(), "root.node_5");
+        assert_eq!(root.node5.node51.to_string(), "root.node_5.node_51");
+        assert_eq!(
+            root.node5.node51.node511.to_string(),
+            "root.node_5.node_51.node_511"
+        );
+        assert_eq!(
+            root.node5.node52.node521.to_string(),
+            "root.node_5.node_52.node_521"
+        );
+    }
+}
